@@ -1,3 +1,4 @@
+import random
 class User:
     def __init__(self, name):
         self.name = name
@@ -35,7 +36,7 @@ class SocialGraph:
 
         Creates that number of users and a randomly distributed friendships
         between those users.
-
+ 
         The number of users must be greater than the average number of friendships.
         """
         # Reset graph
@@ -45,8 +46,35 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
+        # Write a for loop that calls populate users N amount of times
+        for i in range(num_users):
+            self.add_user(f"User {i+1}")
+
+        # result when you run the above: 
+        # {1: set(), 2: set(), 3: set(), 4: set(), 5: set(), 6: set(), 7: set(), 8: set(), 9: set(), 10: set()}
+        # The above result is an empty adjaency list
 
         # Create friendships
+        # To create N random friendships, 
+        # you could create a list with all possible friendship combinations, 
+        # shuffle the list, 
+        possible_friendships = []
+        for user_id in self.users:
+            for friend_id in range(user_id + 1, self.last_id + 1):
+                possible_friendships.append((user_id, friend_id))
+
+        random.shuffle(possible_friendships)
+        # Create N friendships where n = avg_friendships * num_users // 2
+        for i in range(num_users * avg_friendships // 2):
+            friendship = possible_friendships[i]
+            self.add_friendship(friendship[0], friendship[1])
+                
+        print(possible_friendships)
+        # then grab the first N elements from the list. 
+        # You will need to import random to get shuffle.
+
+
+
 
     def get_all_social_paths(self, user_id):
         """
