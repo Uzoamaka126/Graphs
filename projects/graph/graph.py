@@ -30,19 +30,11 @@ class Graph:
         Get all neighbors (edges) of a vertex.
         """
         # initialize a new set to hold neighbors
-        neighbors = set()
-        # loop through the vertices
-        for vertex in self.vertices:
-            # if vertex is equal to the id passed in
-            if vertex is vertex_id:
-                # get the union of the direct edges
-                neighbors = neighbors.union(self.vertices[vertex])
-            # otherwise, if any of the vertices has the passed in id in its set
-            elif vertex_id in self.vertices[vertex]:
-                # it must be a neighbor
-                neighbors.add(vertex)
-
-        return neighbors
+       if vertex_id in self.vertices:
+            return self.vertices[vertex_id]
+        else:
+            raise KeyError("That vertex does not exist")
+       
 
     def bft(self, starting_vertex):
         """
