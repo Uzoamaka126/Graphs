@@ -1,4 +1,5 @@
 import random
+from util import Queue
 class User:
     def __init__(self, name):
         self.name = name
@@ -68,12 +69,10 @@ class SocialGraph:
         for i in range(num_users * avg_friendships // 2):
             friendship = possible_friendships[i]
             self.add_friendship(friendship[0], friendship[1])
-                
+
         print(possible_friendships)
         # then grab the first N elements from the list. 
         # You will need to import random to get shuffle.
-
-
 
 
     def get_all_social_paths(self, user_id):
@@ -85,8 +84,23 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
+
+        queue = Queue()
+        queue.enqueue([user_id])
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+
+        while not queue.is_empty():
+            v = queue.dequeue()
+            current_friend = v[-1]
+
+            if current_friend not in visited:
+                visited[current_friend] = v
+                for friend in self.friendships[current_friend]:
+                    copy = v.copy()
+                    copy.append(friend)
+                    queue.enqueue(copy)
+
         return visited
 
 
